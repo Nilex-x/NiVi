@@ -3,7 +3,7 @@
 ## install
 
 ``` bash
-cd Nivi
+cd NiVi
 npm install
 ```
 
