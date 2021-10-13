@@ -1,6 +1,8 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
+const { EventEmitter } = require('stream')
+const shell = require('electron').shell
 
 function createWindow () {
   // Create the browser window.
@@ -15,6 +17,11 @@ function createWindow () {
 
   // and load the index.html of the app.
   mainWindow.loadURL('http://localhost:3000')
+
+  mainWindow.webContents.on('new-window', (event, url) => {
+    event.preventDefault();
+    shell.openExternal(url);
+  });
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
