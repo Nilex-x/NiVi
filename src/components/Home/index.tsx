@@ -13,42 +13,13 @@ const homeUI = () => {
     const { userLogin } = RootStore.getInstance()
 
     return (
-        <div>
-            <AppBar position="static" color="default" style={{ borderRadius: 20 }}>
-                <Toolbar>
-                    <IconButton>
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h5" align="center" component="div" sx={{ flexGrow: 1 }}>
-                        NiVi Soluce
-                    </Typography>
-                    <IconButton
-                        size="large"
-                        onClick={(e) => setProfilOpen(e.currentTarget)}
-                        color="inherit"
-                    >
-                        <AccountCircle />
-                    </IconButton>
-                    <Menu
-                        anchorEl={profilOpen}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(profilOpen)}
-                        onClose={(e) => setProfilOpen(null)}
-                    >
-                        <MenuItem onClick={(e) => setProfilOpen(null)}>Profile</MenuItem>
-                        <MenuItem onClick={(e) => userLogin.logout()}>Se déconnecter</MenuItem>
-                    </Menu>
-                </Toolbar>
-            </AppBar>
-        </div >
+        <section>
+            <div style={{ justifyItems: "center" }}>
+                <div>
+                    Home
+                </div>
+            </div>
+        </section>
     )
 }
 

@@ -1,5 +1,5 @@
 const NotFound = () => {
-    return(
+    return (
         <div>
             <h1 style={{ alignSelf: "center" }}>
                 Not found
