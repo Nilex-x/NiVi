@@ -4,7 +4,7 @@ import { TextField, Grid, Button } from "@mui/material";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { GET_USER_INFO } from "../../Graphql/schema";
-import '../../Style/Login.css'
+import '../../Style/app.css'
 import Logo from "../../assets/NIVILogo.png"
 import { observer } from "mobx-react-lite";
 import RootStore from "../../store";

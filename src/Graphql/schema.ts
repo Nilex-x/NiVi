@@ -72,3 +72,49 @@ export const GET_MODULE_DETAIL = gql`
     }
   }
 }`
+
+export const GET_BOARD = gql`
+  query Query($KeyAuth: String!) {
+    GetBoard(KeyAuth: $KeyAuth) {
+      notes {
+        title
+        code_acti
+        code_module
+        note
+        noteur
+        codeinstance
+        scolaryear
+      }
+      activites {
+        title
+        code_acti
+        code_module
+        scolaryear
+        codeinstance
+        module
+        timeline_start
+        timeline_end
+        timeline_barre
+        salle
+        registerLink
+      }
+      projets {
+        title
+        code_acti
+        code_module
+        scolaryear
+        codeinstance
+        timeline_start
+        timeline_end
+        timeline_barre
+      }
+      historys {
+        title
+        content
+        date
+        user {
+          title
+        }
+      }
+    }
+}`

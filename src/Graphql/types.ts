@@ -12,6 +12,63 @@ export type Scalars = {
   _Any: any;
 };
 
+
+type Projects = {
+  title: Scalars['String']
+  code_acti: Scalars['String']
+  code_module: Scalars['String']
+  scolaryear: Scalars['String']
+  codeinstance: Scalars['String']
+  timeline_start: Scalars['String']
+  timeline_end: Scalars['String']
+  timeline_barre: Scalars['Float']
+}
+
+type Notes = {
+  title: Scalars['String']
+  code_acti: Scalars['String']
+  code_module: Scalars['String']
+  scolaryear: Scalars['String']
+  codeinstance: Scalars['String']
+  note: Scalars['String']
+  noteur: Scalars['String']
+}
+
+type ActivitesBoard = {
+  title: Scalars['String']
+  code_acti: Scalars['String']
+  code_module: Scalars['String']
+  scolaryear: Scalars['String']
+  codeinstance: Scalars['String']
+  module: Scalars['String']
+  timeline_start: Scalars['String']
+  timeline_end: Scalars['String']
+  timeline_barre: Scalars['Float']
+  salle: Scalars['String']
+  registerLink: Scalars['String']
+}
+
+
+type UserHistory = {
+  picture: Scalars['String']
+  title: Scalars['String']
+}
+
+type History = {
+  title: Scalars['String']
+  user: Array<UserHistory>
+  content: Scalars['String']
+  date: Scalars['String']
+}
+
+export type QueryGetBoardReponse = {
+  projets: Array<Projects>
+  notes: Array<Notes>
+  activites: Array<ActivitesBoard>
+  historys: Array<History>
+}
+
+
 export type QueryGetUserInfoResponse = {
     firstname: Scalars['String']
     lastname: Scalars['String']

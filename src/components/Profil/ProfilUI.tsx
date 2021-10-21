@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from "react";
 import { AccountCircle } from "@mui/icons-material";
 import Query from "../../Graphql/Query";
+import '../../Style/app.css'
 
 interface UserInfoType {
     firstname: String
@@ -23,14 +24,14 @@ const ProfilUI = () => {
 
     const { userLogin } = RootStore.getInstance()
     const queries = new Query()
-    const [userInfo, setUserInfo] = useState(null)
+    const [userInfo, setUserInfo] = useState<null | UserInfoType | any>(null)
     const [isLoading, setLoading] = useState(false)
 
     const getUserInfo = async () => {
         setLoading(true)
         try {
             const response = await queries.getUserInfo(userLogin.authKey)
-            console.log("response", response)
+            console.log("response", response.data.GetUserInfo)
             setUserInfo(response.data.GetUserInfo)
         } catch (err) {
             console.log("graphql error", JSON.stringify(err, null, 2))
@@ -44,19 +45,57 @@ const ProfilUI = () => {
 
     return (
         <section>
-            {/* <Grid>
-
-            </Grid> */}
             <div>
-                Profil
+                <Typography variant="h4" align="center">Profil</Typography>
                 {isLoading ?
                     <CircularProgress />
                     :
-                    <div>
-                        {userInfo?.firstname}
-                        {userInfo?.lastname}
-                        {userInfo?.login}
-                    </div>
+                    // <div>
+                    //     {userInfo?.firstname}
+                    //     {userInfo?.lastname}
+                    //     {userInfo?.login}
+                    // </div>
+                    <Grid container spacing={2} direction="row" wrap="wrap">
+                        <Grid item xs={8}>
+                            <div className="box">
+                                <Typography variant="h5" align="center" style={{ textDecoration: "underline", marginBottom: 10 }}>Info General</Typography>
+                            </div>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <div className="box">
+                                <Typography variant="h5" align="center" style={{ textDecoration: "underline", marginBottom: 10 }}>Info Profil</Typography>
+                                <div className="profil-info">
+                                    <div>
+                                        <img src={userInfo?.picture} />
+                                    </div>
+                                    <div style={{ marginTop: 5 }}>
+                                        <Grid container spacing={3} direction="column">
+                                            <Grid item>
+                                                <div>
+                                                    {userInfo?.firstname} {userInfo?.lastname}
+                                                </div>
+                                            </Grid>
+                                            <Grid item>
+                                                <div>
+                                                    Email: {userInfo?.login}
+                                                </div>
+                                            </Grid>
+                                            <Grid item>
+                                                <div>
+                                                    GPA: {userInfo?.gpa}
+                                                </div>
+                                            </Grid>
+                                            <Grid item>
+                                                <div>
+                                                    Crédits: {userInfo?.credits}
+                                                </div>
+                                            </Grid>
+                                        </Grid>
+                                    </div>
+                                </div>
+                            </div>
+                        </Grid>
+                    </Grid>
                 }
             </div>
         </section>

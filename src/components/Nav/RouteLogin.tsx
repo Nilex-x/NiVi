@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { AccountCircle } from "@mui/icons-material";
 import RootStore from "../../store";
 import { useHistory } from "react-router-dom";
-import "../../Style/appBar.css"
+import "../../Style/app.css"
 
 // import ProfilUI from "../Profil/ProfilUI";
 
@@ -25,17 +25,36 @@ const RouteLogin = () => {
     const history = useHistory()
 
     const [profilOpen, setProfilOpen] = useState<null | HTMLElement>(null)
+    const [menuOpen, setMenuOpen] = useState<null | HTMLElement>(null)
 
     const { userLogin } = RootStore.getInstance()
 
     return (
         <section>
             <AppBar position="static" color="default" style={{ borderRadius: 20 }}>
-                <Toolbar>
-                    <IconButton>
+                <Toolbar className="space-around">
+                    <IconButton
+                    onClick={(e) => setMenuOpen(e.currentTarget)}
+                    >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h5" align="center" component="div" className="appbar-title" sx={{ flexGrow: 1 }} onClick={() => history.push('/')}>
+                    <Menu
+                        anchorEl={menuOpen}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        open={Boolean(menuOpen)}
+                        onClose={(e) => setMenuOpen(null)}
+                    >
+                        <MenuItem onClick={(e) => { history.push("/"); setMenuOpen(null) }}>Accueil</MenuItem>
+                    </Menu>
+                    <Typography variant="h5" align="center" sx={{ cursor: "pointer" }} onClick={() => history.push('/')}>
                         NiVi Soluce
                     </Typography>
                     <IconButton
@@ -48,7 +67,7 @@ const RouteLogin = () => {
                     <Menu
                         anchorEl={profilOpen}
                         anchorOrigin={{
-                            vertical: 'top',
+                            vertical: 'bottom',
                             horizontal: 'right',
                         }}
                         keepMounted
@@ -59,7 +78,7 @@ const RouteLogin = () => {
                         open={Boolean(profilOpen)}
                         onClose={(e) => setProfilOpen(null)}
                     >
-                        <MenuItem onClick={(e) => { history.push("/user"); setProfilOpen(null) }}>Profile</MenuItem>
+                        <MenuItem onClick={(e) => { history.push("/user"); setProfilOpen(null) }}>Profil</MenuItem>
                         <MenuItem onClick={(e) => userLogin.logout()}>Se déconnecter</MenuItem>
                     </Menu>
                 </Toolbar>

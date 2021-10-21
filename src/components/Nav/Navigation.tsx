@@ -2,7 +2,6 @@ import { Button, CircularProgress, Drawer, Hidden } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import RootStore from "../../store";
-import '../../Style/Home.css'
 import BlockAccess from "../BlockAccess/BlockAccess";
 import { BrowserRouter } from "react-router-dom";
 import Login from "../Login/Login";

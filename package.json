@@ -10,6 +10,7 @@
     "@mui/lab": "^5.0.0-alpha.50",
     "@mui/material": "^5.0.3",
     "concurrently": "^6.3.0",
+    "date-fns": "^2.25.0",
     "electron": "^15.1.2",
     "graphql": "^15.6.1",
     "mobx": "^6.3.5",
@@ -41,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/date-fns": "^2.6.0"
   }
 }
