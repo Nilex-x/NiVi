@@ -48,13 +48,10 @@ const ProfilUI = () => {
             <div>
                 <Typography variant="h4" align="center">Profil</Typography>
                 {isLoading ?
-                    <CircularProgress />
+                    <div className="center">
+                        <CircularProgress />
+                    </div>
                     :
-                    // <div>
-                    //     {userInfo?.firstname}
-                    //     {userInfo?.lastname}
-                    //     {userInfo?.login}
-                    // </div>
                     <Grid container spacing={2} direction="row" wrap="wrap">
                         <Grid item xs={8}>
                             <div className="box">
