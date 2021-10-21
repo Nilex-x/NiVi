@@ -31,10 +31,10 @@ const ProfilUI = () => {
         setLoading(true)
         try {
             const response = await queries.getUserInfo(userLogin.authKey)
-            console.log("response", response.data.GetUserInfo)
+            //console.log("response", response.data.GetUserInfo)
             setUserInfo(response.data.GetUserInfo)
         } catch (err) {
-            console.log("graphql error", JSON.stringify(err, null, 2))
+            console.log("graphql error") //JSON.stringify(err, null, 2)
         }
         setLoading(false)
     }

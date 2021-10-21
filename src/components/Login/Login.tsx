@@ -8,30 +8,22 @@ import '../../Style/app.css'
 import Logo from "../../assets/NIVILogo.png"
 import { observer } from "mobx-react-lite";
 import RootStore from "../../store";
+import Query from "../../Graphql/Query";
 
 const Login = () => {
 
     const [userInput, setUserInput] = useState("")
     const [isLoading, setLoading] = useState(false)
-    const { refetch } = useQuery(GET_USER_INFO)
+
+    const queries = new Query()
 
     const { userLogin } = RootStore.getInstance()
 
     const GetInfo = async () => {
         setLoading(true)
         try {
-            const data = await refetch({ KeyAuth: userInput })
+            const data = await queries.getUserInfo(userInput)
             const UserInfo = data.data.GetUserInfo
-            if (UserInfo.message || data.error) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Erreur interne",
-                    text: "Les serveurs de l'intra sont indisponible veuillez réessayer ultérieurement",
-                    footer: '<a href="https://intra.epitech.eu/admin/autolog" target="_blank">Cliquer ici pour trouver votre clef</a>'
-                })
-                setLoading(false)
-                return
-            }
             if (UserInfo.login === "") {
                 Swal.fire({
                     icon: "error",

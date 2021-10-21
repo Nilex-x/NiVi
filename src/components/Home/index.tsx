@@ -74,11 +74,11 @@ const homeUI = () => {
         setLoading(true)
         try {
             const response = await queries.getBoard(userLogin.authKey)
-            console.log("response", response.data.GetBoard)
+            //console.log("response", response.data.GetBoard)
             setBoardInfo(response.data.GetBoard)
             setLoading(false)
         } catch (err) {
-            console.log("graphql error", JSON.stringify(err, null, 2))
+            console.log("graphql error") //JSON.stringify(err, null, 2)
         }
     }
 
