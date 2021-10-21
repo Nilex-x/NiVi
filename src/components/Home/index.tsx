@@ -76,10 +76,10 @@ const homeUI = () => {
             const response = await queries.getBoard(userLogin.authKey)
             console.log("response", response.data.GetBoard)
             setBoardInfo(response.data.GetBoard)
+            setLoading(false)
         } catch (err) {
             console.log("graphql error", JSON.stringify(err, null, 2))
         }
-        setLoading(false)
     }
 
     const getFormat = (date) => {
@@ -194,13 +194,13 @@ const homeUI = () => {
                     <div style={{ marginTop: 10 }}>
                         <Typography variant="h4" align="center">Historique</Typography>
                         <div className="box">
-                            <Grid container rowSpacing={2} direction="column">
+                            <div className="box-scroll-500">
                                 {boardInfo && boardInfo?.historys.map((history, index) => (
-                                    <Grid item key={index} >
+                                    <div key={index} className="marginbot-10" >
                                         <div dangerouslySetInnerHTML={{ __html: history.title }} />
-                                    </Grid>
+                                    </div>
                                 ))}
-                            </Grid>
+                            </div>
                         </div>
                     </div>
                 </div>}

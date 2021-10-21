@@ -4,12 +4,12 @@ WORKDIR /usr/src/app
 
 COPY ./ /usr/src/app/
 
-RUN npm install -g npm@8.0.0
-
 RUN cd /usr/src/app && npm install && rm dockerfile
 
-ENV BROWSER="none"
+RUN npm run build
 
-ENV URL_GRAPHQL="http://graphql/graphql"
+RUN npm install -g serve
 
-CMD [ "npm", "start" ]
+EXPOSE 3000
+
+CMD [ "serve", "-s", "build", "-l", "3000" ]

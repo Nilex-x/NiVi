@@ -8,7 +8,7 @@ export default class GQLClient {
     constructor() {
 
         this.client = new ApolloClient({
-            uri: `http://${window.location.hostname}:4000`,
+            uri: `http://nivi-back.hosting.oiqia.net`,
             cache: new InMemoryCache(),
             queryDeduplication: true
         });
