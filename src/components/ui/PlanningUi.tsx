@@ -196,6 +196,7 @@ const PlanningUI = () => {
                                 slotMaxTime="24:00:00"
                                 locale={fr}
                                 allDaySlot={false}
+                                eventClick={(info) => console.log(info.event.title)}
                             />
                         </div>
                     </div>
