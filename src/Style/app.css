@@ -36,6 +36,21 @@
     text-align: center;
 }
 
+.space-around-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	align-content: stretch;
+}
+
 .content {
     min-height: "calc(100vh - 123px)";
     margin-top: "70px";

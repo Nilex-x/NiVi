@@ -10,7 +10,7 @@ import "../../Style/app.css"
 
 // import ProfilUI from "../Profil/ProfilUI";
 
-const ProfilUI = lazy(() => import("../Profil/ProfilUI"))
+const ProfilUI = lazy(() => import("../ui/ProfilUI"))
 
 //import NotFound from "../BlockAccess/NotFound";
 
@@ -18,7 +18,11 @@ const NotFound = lazy(() => import('../BlockAccess/NotFound'));
 
 //import HomeUI from "../Home/index"
 
-const HomeUI = lazy(() => import('../Home/index'));
+const HomeUI = lazy(() => import('../ui/HomeUi'));
+
+import PlanningUI from "../ui/PlanningUi"
+
+//const PlanningUI = lazy(() => import("../ui/PlanningUi"))
 
 const RouteLogin = () => {
 
@@ -53,6 +57,7 @@ const RouteLogin = () => {
                         onClose={(e) => setMenuOpen(null)}
                     >
                         <MenuItem onClick={(e) => { history.push("/"); setMenuOpen(null) }}>Accueil</MenuItem>
+                        <MenuItem onClick={(e) => { history.push("/planning"); setMenuOpen(null) }}>Planning</MenuItem>
                     </Menu>
                     <Typography variant="h5" align="center" sx={{ cursor: "pointer" }} onClick={() => history.push('/')}>
                         NiVi Soluce
@@ -88,6 +93,7 @@ const RouteLogin = () => {
                     <Switch>
                         <Route exact path="/" component={HomeUI} />
                         <Route path="/user" component={ProfilUI} />
+                        <Route path="/planning" component={PlanningUI} />
                         <Route path="/*" component={NotFound} />
                     </Switch>
                 </div>

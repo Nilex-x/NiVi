@@ -1,6 +1,6 @@
 import GQLClient from "../GraphqlConfig";
-import { GET_BOARD, GET_USER_INFO } from "../schema";
-import { QueryGetUserInfoResponse, QueryGetBoardReponse } from "../types";
+import { GET_BOARD, GET_PLANNING, GET_USER_INFO } from "../schema";
+import { QueryGetUserInfoResponse, QueryGetBoardReponse, QueryGetPlanning } from "../types";
 
 export default class Query {
     client = GQLClient.getIntance()?.getClient()
@@ -21,6 +21,16 @@ export default class Query {
             query: GET_BOARD,
             variables: {
                 KeyAuth
+            }
+        })
+    }
+
+    getPlanning(KeyAuth: string) {
+        return this.client
+        .query<{ GetPlanning: QueryGetPlanning }>({
+            query: GET_PLANNING,
+            variables: {
+                KeyAuth,
             }
         })
     }

@@ -68,20 +68,50 @@ export type QueryGetBoardReponse = {
   historys: Array<History>
 }
 
-
 export type QueryGetUserInfoResponse = {
-    firstname: Scalars['String']
-    lastname: Scalars['String']
-    login: Scalars['String']
-    credits: Scalars['Int']
-    gpa: Scalars['String']
-    picture: Scalars['String']
-    semeste: Scalars['Int']
-    studentyear: Scalars['String']
-    promo: Scalars['Int']
-    scolaryear: Scalars['String']
+  firstname: Scalars['String']
+  lastname: Scalars['String']
+  login: Scalars['String']
+  credits: Scalars['Int']
+  gpa: Scalars['String']
+  picture: Scalars['String']
+  semeste: Scalars['Int']
+  studentyear: Scalars['String']
+  promo: Scalars['Int']
+  scolaryear: Scalars['String']
+}
+
+export type QueryGetPlanning = {
+  scolaryear: Scalars['String']
+  codemodule: Scalars['String']
+  codeinstance: Scalars['String']
+  codeacti: Scalars['String']
+  codeevent: Scalars['String']
+  semester: Scalars['Int']
+  titlemodule: Scalars['String']
+  acti_title: Scalars['String']
+  start: Scalars['String']
+  end: Scalars['String']
+  total_students_registered: Scalars['Int']
+  title: Scalars['String']
+  type_title: Scalars['String']
+  type_code: Scalars['String']
+  is_rdv: Scalars['String']
+  nb_hours: Scalars['String']
+  allowed_planning_start: Scalars['String']
+  allowed_planning_end: Scalars['String']
+  nb_group: Scalars['Int']
+  nb_max_students_projet: Scalars['Int']
+  salle: Scalars['String']
+  nb_seat: Scalars['String']
+  module_available: Scalars['Boolean']
+  module_registered: Scalars['Boolean']
+  past: Scalars['Boolean']
+  allow_register: Scalars['Boolean']
+  event_registered: Scalars['Boolean']
+  project: Scalars['Boolean']
 }
 
 export type Result = {
-  result : Scalars['Int'];
+  result: Scalars['Int'];
 }

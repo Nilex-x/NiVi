@@ -7,10 +7,8 @@ import GQLClient from './Graphql/GraphqlConfig';
 const client = GQLClient.getIntance()?.getClient()
 
 ReactDOM.render(
-  <React.StrictMode>
     <ApolloProvider client={client}>
       <Navigation/>
-    </ApolloProvider>
-  </React.StrictMode>,
+    </ApolloProvider>,
   document.getElementById('root')
 );

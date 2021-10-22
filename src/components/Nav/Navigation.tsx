@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import RootStore from "../../store";
 import BlockAccess from "../BlockAccess/BlockAccess";
 import { BrowserRouter } from "react-router-dom";
-import Login from "../Login/Login";
+import Login from "../ui/Login";
 import RouteLogin from "./RouteLogin";
 
 const Navigation = () => {

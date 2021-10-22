@@ -118,3 +118,38 @@ export const GET_BOARD = gql`
       }
     }
 }`
+
+export const GET_PLANNING = gql`
+  query Query($KeyAuth: String!) {
+    GetPlanning(KeyAuth: $KeyAuth) {
+      acti_title
+      start
+      end
+      scolaryear
+      codemodule
+      codeinstance
+      codeacti
+      codeevent
+      semester
+      titlemodule
+      total_students_registered
+      title
+      type_title
+      is_rdv
+      type_code
+      nb_hours
+      allowed_planning_start
+      allowed_planning_end
+      nb_group
+      nb_max_students_projet
+      salle
+      nb_seat
+      module_available
+      module_registered
+      past
+      allow_register
+      event_registered
+      project
+    }
+  }
+`
