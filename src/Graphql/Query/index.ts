@@ -1,6 +1,6 @@
 import GQLClient from "../GraphqlConfig";
-import { GET_BOARD, GET_MODULE_DETAIL, GET_PLANNING, GET_USER_INFO } from "../schema";
-import { User, Board, Planning, ModuleDetail } from "../types";
+import { GET_ACTI_DETAIL, GET_BOARD, GET_MODULE_DETAIL, GET_PLANNING, GET_USER_INFO } from "../schema";
+import { User, Board, Planning, ModuleDetail, ActiType } from "../types";
 
 export default class Query {
     client = GQLClient.getIntance()?.getClient()
@@ -37,8 +37,22 @@ export default class Query {
 
     getModuleDetails(KeyAuth: string, scolaryear: string, codemodule: string, codeinstance: string, codeActi: string) {
         return this.client
-        .query<{ GetModuleDetails: ModuleDetail }>({
+        .query<{ GetModuleDetail: ModuleDetail }>({
             query: GET_MODULE_DETAIL,
+            variables: {
+                KeyAuth,
+                scolaryear,
+                codemodule,
+                codeinstance,
+                codeActi
+            }
+        })
+    }
+
+    getActiDetail(KeyAuth: string, scolaryear: string, codemodule: string, codeinstance: string, codeActi: string) {
+        return this.client
+        .query<{ GetActiDetail: ActiType }>({
+            query: GET_ACTI_DETAIL,
             variables: {
                 KeyAuth,
                 scolaryear,

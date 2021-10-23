@@ -48,24 +48,24 @@ export type Student = {
 };
 
 export type Resp = {
-  __typename?: 'resp';
+  __typename?: 'Resp';
   title: Scalars['String'];
   picture: Scalars['String'];
 };
 
 export type Activites = {
   __typename?: 'activites';
-  codeacti: Scalars['String'];
-  module_title: Scalars['String'];
-  title: Scalars['String'];
-  description: Scalars['String'];
-  type_title: Scalars['String'];
-  end_register: Scalars['String'];
-  deadline: Scalars['String'];
-  end: Scalars['String'];
-  register: Scalars['String'];
-  id_projet: Scalars['String'];
-  project_title: Scalars['String'];
+  codeacti?: Maybe<Scalars['String']>;
+  module_title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  type_title?: Maybe<Scalars['String']>;
+  end_register?: Maybe<Scalars['String']>;
+  deadline?: Maybe<Scalars['String']>;
+  end?: Maybe<Scalars['String']>;
+  register?: Maybe<Scalars['String']>;
+  id_projet?: Maybe<Scalars['String']>;
+  project_title?: Maybe<Scalars['String']>;
 };
 
 export type ModuleDetail = {
@@ -177,11 +177,52 @@ export type Planning = {
   project?: Maybe<Scalars['Boolean']>;
 };
 
+export type EventType = {
+  __typename?: 'EventType';
+  code?: Maybe<Scalars['String']>;
+  seats?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  nb_inscrits?: Maybe<Scalars['String']>;
+  begin?: Maybe<Scalars['String']>;
+  end?: Maybe<Scalars['String']>;
+  location?: Maybe<Scalars['String']>;
+  user_status?: Maybe<Scalars['String']>;
+  resp?: Maybe<Array<Resp>>;
+};
+
+export type ActiType = {
+  __typename?: 'ActiType';
+  module_title: Scalars['String'];
+  title: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  type_title?: Maybe<Scalars['String']>;
+  type_code?: Maybe<Scalars['String']>;
+  begin?: Maybe<Scalars['String']>;
+  start?: Maybe<Scalars['String']>;
+  end_register?: Maybe<Scalars['String']>;
+  deadline?: Maybe<Scalars['String']>;
+  end?: Maybe<Scalars['String']>;
+  nb_hours?: Maybe<Scalars['String']>;
+  nb_group?: Maybe<Scalars['Int']>;
+  num?: Maybe<Scalars['Int']>;
+  register?: Maybe<Scalars['Boolean']>;
+  is_projet?: Maybe<Scalars['Boolean']>;
+  is_note?: Maybe<Scalars['Boolean']>;
+  nb_notes?: Maybe<Scalars['String']>;
+  rdv_status?: Maybe<Scalars['String']>;
+  archive?: Maybe<Scalars['String']>;
+  nb_planified?: Maybe<Scalars['Int']>;
+  student_registered?: Maybe<Scalars['Int']>;
+  events?: Maybe<Array<EventType>>;
+};
+
 export type Query = {
   __typename?: 'Query';
   GetPlanning?: Maybe<Array<Maybe<Planning>>>;
   GetAllModule: Array<Maybe<Module>>;
   GetModuleDetail: ModuleDetail;
+  GetActiDetail: ActiType;
   GetUserInfo: User;
   GetBoard: Board;
 };
@@ -200,6 +241,15 @@ export type QueryGetAllModuleArgs = {
 
 
 export type QueryGetModuleDetailArgs = {
+  KeyAuth: Scalars['String'];
+  scolaryear: Scalars['String'];
+  codemodule: Scalars['String'];
+  codeinstance: Scalars['String'];
+  codeActi?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryGetActiDetailArgs = {
   KeyAuth: Scalars['String'];
   scolaryear: Scalars['String'];
   codemodule: Scalars['String'];

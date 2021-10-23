@@ -35,8 +35,8 @@ export const GET_USER_INFO = gql`
 }`
 
 export const GET_MODULE_DETAIL = gql`
-  query Query($keyAuth: String!, $scolaryear: String!, $codemodule: String!, $codeinstance: String!, $codeActi: String) {
-  GetModuleDetail(KeyAuth: $keyAuth, scolaryear: $scolaryear, codemodule: $codemodule, codeinstance: $codeinstance, codeActi: $codeActi) {
+  query Query($KeyAuth: String!, $scolaryear: String!, $codemodule: String!, $codeinstance: String!, $codeActi: String) {
+  GetModuleDetail(KeyAuth: $KeyAuth, scolaryear: $scolaryear, codemodule: $codemodule, codeinstance: $codeinstance, codeActi: $codeActi) {
     title
     end_register
     closed
@@ -150,6 +150,49 @@ export const GET_PLANNING = gql`
       allow_register
       event_registered
       project
+    }
+  }
+`
+
+export const GET_ACTI_DETAIL = gql`
+  query GetActiDetail($KeyAuth: String!, $codemodule: String!, $codeinstance: String!, $scolaryear: String!, $codeActi: String) {
+    GetActiDetail(KeyAuth: $KeyAuth, codemodule: $codemodule, codeinstance: $codeinstance, scolaryear: $scolaryear, codeActi: $codeActi) {
+      module_title
+      description
+      type_title
+      title
+      type_code
+      begin
+      start
+      end_register
+      deadline
+      end
+      nb_hours
+      nb_group
+      num
+      register
+      is_projet
+      is_note
+      nb_notes
+      rdv_status
+      archive
+      nb_planified
+      student_registered
+      events {
+        code
+        seats
+        title
+        description
+        nb_inscrits
+        begin
+        end
+        location
+        resp {
+          title
+          picture
+        }
+        user_status
+      }
     }
   }
 `

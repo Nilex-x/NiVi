@@ -11,6 +11,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import fr from "@fullcalendar/core/locales/fr"
+import { useHistory } from "react-router-dom";
 
 interface PlanningInfoType {
     scolaryear: string
@@ -54,16 +55,17 @@ const PlanningUI = () => {
     const [search, setSearch] = useState<string>("")
     const [isLoading, setLoading] = useState<Boolean>(false)
 
+    const history = useHistory()
+
     const formatEvent = (event) => {
         const clearArray = event.map((element: PlanningInfoType) => {
             return {
                 ...element,
                 start: new Date(element.start),
                 end: new Date(element.end),
-                title: element.codemodule
+                title: element.acti_title
             }
         })
-        console.log("newArray", clearArray)
         setPlanningInfo(clearArray)
     }
 
@@ -82,9 +84,7 @@ const PlanningUI = () => {
         const newArray = [...tabOfCheck]
         const indexDefault = tabOfCheck.indexOf(0)
         const indexSemester = tabOfCheck.indexOf(userLogin.currentSemestre)
-        console.log("index", tabOfCheck, tabOfCheck)
         if (!e.target.checked) {
-            console.log("remove")
             if (indexDefault != -1) {
                 newArray.splice(indexDefault, 1)
             }
@@ -93,7 +93,6 @@ const PlanningUI = () => {
             }
             setOnlyRegisterMod(false)
         } else {
-            console.log("add")
             if (indexDefault == -1) {
                 newArray.push(0)
             }
@@ -101,7 +100,6 @@ const PlanningUI = () => {
                 newArray.push(userLogin.currentSemestre)
             }
         }
-        console.log(newArray, tabOfCheck, userLogin.currentSemestre)
         setTabOfCheck(newArray)
     }
 
@@ -110,7 +108,6 @@ const PlanningUI = () => {
         try {
             const response = await queries.getPlanning(userLogin.authKey)
             const planning = response.data.GetPlanning
-            //console.log(planning)
             formatEvent(planning)
         } catch (err) {
             console.log("graphql error") //JSON.stringify(err, null, 2)
@@ -140,12 +137,11 @@ const PlanningUI = () => {
     }
 
     useEffect(() => {
-        console.log("re render root")
         getPlanning()
     }, [])
 
     useEffect(() => {
-        console.log("re render tabOfCheck")
+        //console.log("re render tabOfCheck")
     }, [tabOfCheck])
 
     const getCheckedStatus = (nb: number) => {
@@ -225,7 +221,7 @@ const PlanningUI = () => {
                                 slotMaxTime="24:00:00"
                                 locale={fr}
                                 allDaySlot={false}
-                                eventClick={(info) => console.log(info.event.title)}
+                                eventClick={(info: any) => history.push(("/module/" + info.event._def.extendedProps.scolaryear + "/" + info.event._def.extendedProps.codemodule + "/" + info.event._def.extendedProps.codeinstance +"/" + info.event._def.extendedProps.codeacti))}
                             />
                         </div>
                     </div>

@@ -18,14 +18,13 @@ const Navigation = () => {
     const getInfo = async () => {
         const authKey = localStorage.getItem("KeyAuth")
         if (authKey) {
-            console.log("key", authKey)
             try {
                 const data = await queries.getUserInfo(authKey)
                 const userInfo = data.data.GetUserInfo
                 const { firstname, lastname, login, semester } = userInfo
                 userLogin.login(authKey, login, firstname, lastname, semester)
             } catch (err) {
-                console.log("graphql error", err)
+                console.log("graphql error") //JSON.stringify(err, null, 2)
             } finally {
                 setLoading(false)
             }
