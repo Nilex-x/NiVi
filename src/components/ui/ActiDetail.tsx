@@ -79,14 +79,14 @@ const ActiDetailUI = () => {
     return (
         <section>
             <div>
-                <Typography variant="h4" align="center">Acti</Typography>
+                <Typography variant="h4" align="center">Resumé de l'activité</Typography>
                 {isLoading ?
                     <div className="center">
                         <CircularProgress />
                     </div>
                     :
                     <div>
-                        {actiInfo.title}
+                        {actiInfo?.title} - status: {actiInfo?.register ? "inscrit" : "pas inscrit"}
                     </div>
                 }
             </div>
