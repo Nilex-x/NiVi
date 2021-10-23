@@ -35,15 +35,8 @@ export const GET_USER_INFO = gql`
 }`
 
 export const GET_MODULE_DETAIL = gql`
-  query GetModuleDetail($KeyAuth: String!, $scolaryear: String!, $codemodule: String!, $codeinstance: String!, $codeActi: String) {
-    GetModuleDetail(KeyAuth: $KeyAuth, scolaryear: $scolaryear, codemodule: $codemodule, codeinstance: $codeinstance, codeActi: $code_acti) {
-    file
-    studentRegistered {
-      name
-      login
-      picture
-      promo
-    }
+  query Query($keyAuth: String!, $scolaryear: String!, $codemodule: String!, $codeinstance: String!, $codeActi: String) {
+  GetModuleDetail(KeyAuth: $keyAuth, scolaryear: $scolaryear, codemodule: $codemodule, codeinstance: $codeinstance, codeActi: $codeActi) {
     title
     end_register
     closed
@@ -58,18 +51,25 @@ export const GET_MODULE_DETAIL = gql`
     allow_register
     color
     activites {
-      title
       codeacti
       module_title
+      title
       description
-      type_title
       end_register
-      deadline
       end
       register
       id_projet
       project_title
+      deadline
+      type_title
     }
+    studentRegistered {
+      login
+      name
+      picture
+      promo
+    }
+    file
   }
 }`
 

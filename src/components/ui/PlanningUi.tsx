@@ -49,10 +49,10 @@ const PlanningUI = () => {
     const queries = new Query()
     const [planningInfo, setPlanningInfo] = useState<null | PlanningInfoType | any>([])
     const [tabOfCheck, setTabOfCheck] = useState<Number[]>([0, 1, 2])
-    const [filterOfModule, setFilterOfModule] = useState<Number[]>([1, 1, 0])
-    const [onlyRegisterSes, setOnlyRegisterSes] = useState(false)
-    const [onlyRegisterMod, setOnlyRegisterMod] = useState(true)
-    const [isLoading, setLoading] = useState(false)
+    const [onlyRegisterSes, setOnlyRegisterSes] = useState<boolean>(false)
+    const [onlyRegisterMod, setOnlyRegisterMod] = useState<boolean>(true)
+    const [search, setSearch] = useState<string>("")
+    const [isLoading, setLoading] = useState<Boolean>(false)
 
     const formatEvent = (event) => {
         const clearArray = event.map((element: PlanningInfoType) => {
@@ -60,7 +60,7 @@ const PlanningUI = () => {
                 ...element,
                 start: new Date(element.start),
                 end: new Date(element.end),
-                title: element.acti_title
+                title: element.codemodule
             }
         })
         console.log("newArray", clearArray)
@@ -78,15 +78,31 @@ const PlanningUI = () => {
         setTabOfCheck(newArray)
     }
 
-    const removeCurrentModule = (index: number) => { // remove current module [update Mobx]
-        const value = filterOfModule[index]
-        const newArray = [...filterOfModule]
-        if (value == 0) {
-            newArray[index] = 1
+    const removeCurrentModule = (e) => {
+        const newArray = [...tabOfCheck]
+        const indexDefault = tabOfCheck.indexOf(0)
+        const indexSemester = tabOfCheck.indexOf(userLogin.currentSemestre)
+        console.log("index", tabOfCheck, tabOfCheck)
+        if (!e.target.checked) {
+            console.log("remove")
+            if (indexDefault != -1) {
+                newArray.splice(indexDefault, 1)
+            }
+            if (indexSemester != -1) {
+                newArray.splice(indexSemester - 1, 1)
+            }
+            setOnlyRegisterMod(false)
         } else {
-            newArray[index] = 0
+            console.log("add")
+            if (indexDefault == -1) {
+                newArray.push(0)
+            }
+            if (indexSemester == -1) {
+                newArray.push(userLogin.currentSemestre)
+            }
         }
-        setFilterOfModule(newArray)
+        console.log(newArray, tabOfCheck, userLogin.currentSemestre)
+        setTabOfCheck(newArray)
     }
 
     const getPlanning = async () => {
@@ -94,7 +110,7 @@ const PlanningUI = () => {
         try {
             const response = await queries.getPlanning(userLogin.authKey)
             const planning = response.data.GetPlanning
-            console.log(planning)
+            //console.log(planning)
             formatEvent(planning)
         } catch (err) {
             console.log("graphql error") //JSON.stringify(err, null, 2)
@@ -111,7 +127,11 @@ const PlanningUI = () => {
                 if (onlyRegisterSes && !obj.event_registered) {
                     return false
                 } else {
-                    return true;
+                    if (search != "" && !obj.codemodule.includes(search)) {
+                        return false;
+                    } else {
+                        return true
+                    }
                 }
             }
         } else {
@@ -128,8 +148,16 @@ const PlanningUI = () => {
         console.log("re render tabOfCheck")
     }, [tabOfCheck])
 
+    const getCheckedStatus = (nb: number) => {
+        const index = tabOfCheck.indexOf(nb)
+        if (index == -1) {
+            return (false)
+        } else {
+            return (true)
+        }
+    }
+
     const events = planningInfo.filter(refecthByFilter)
-    console.log(events, tabOfCheck)
 
     return (
         <section>
@@ -147,19 +175,19 @@ const PlanningUI = () => {
                                     <Typography variant="h6" align="center">Semester</Typography>
                                     <div className="flex-row">
                                         <FormGroup>
-                                            <FormControlLabel control={<Checkbox defaultChecked onClick={() => manageTabCond(0)} />} label="Semester 0" />
-                                            <FormControlLabel control={<Checkbox defaultChecked onClick={() => manageTabCond(1)} />} label="Semester 1" />
-                                            <FormControlLabel control={<Checkbox onClick={() => manageTabCond(3)} />} label="Semester 3" />
-                                            <FormControlLabel control={<Checkbox onClick={() => manageTabCond(5)} />} label="Semester 5" />
-                                            <FormControlLabel control={<Checkbox onClick={() => manageTabCond(7)} />} label="Semester 7" />
-                                            <FormControlLabel control={<Checkbox onClick={() => manageTabCond(9)} />} label="Semester 9" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(0)} onClick={() => manageTabCond(0)} />} label="Semester 0" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(1)} onClick={() => manageTabCond(1)} />} label="Semester 1" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(3)} onClick={() => manageTabCond(3)} />} label="Semester 3" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(5)} onClick={() => manageTabCond(5)} />} label="Semester 5" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(7)} onClick={() => manageTabCond(7)} />} label="Semester 7" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(9)} onClick={() => manageTabCond(9)} />} label="Semester 9" />
                                         </FormGroup>
                                         <FormGroup style={{ marginTop: 40 }}>
-                                            <FormControlLabel control={<Checkbox defaultChecked onClick={() => manageTabCond(2)} />} label="Semester 2" />
-                                            <FormControlLabel control={<Checkbox onClick={() => manageTabCond(4)} />} label="Semester 4" />
-                                            <FormControlLabel control={<Checkbox onClick={() => manageTabCond(6)} />} label="Semester 6" />
-                                            <FormControlLabel control={<Checkbox onClick={() => manageTabCond(8)} />} label="Semester 8" />
-                                            <FormControlLabel control={<Checkbox onClick={() => manageTabCond(10)} />} label="Semester 10" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(2)} onClick={() => manageTabCond(2)} />} label="Semester 2" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(4)} onClick={() => manageTabCond(4)} />} label="Semester 4" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(6)} onClick={() => manageTabCond(6)} />} label="Semester 6" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(8)} onClick={() => manageTabCond(8)} />} label="Semester 8" />
+                                            <FormControlLabel control={<Checkbox checked={getCheckedStatus(10)} onClick={() => manageTabCond(10)} />} label="Semester 10" />
                                         </FormGroup>
                                     </div>
                                 </div>
@@ -168,14 +196,15 @@ const PlanningUI = () => {
                                 <div className="box" style={{ height: "81%" }}>
                                     <Typography variant="h6" align="center">Filtres</Typography>
                                     <FormGroup>
-                                        <FormControlLabel control={<Checkbox defaultChecked />} label="Modules du semestre courant" />
-                                        <FormControlLabel control={<Checkbox defaultChecked onClick={() => setOnlyRegisterMod(!onlyRegisterMod)} />} label="Module ou je suis incrit seulement" />
-                                        <FormControlLabel control={<Checkbox onClick={() => setOnlyRegisterSes(!onlyRegisterSes)} />} label="Sessions ou je suis inscrit uniquement" />
+                                        <FormControlLabel control={<Checkbox defaultChecked onClick={(e) => removeCurrentModule(e)} />} label="Modules du semestre courant" />
+                                        <FormControlLabel control={<Checkbox  checked={onlyRegisterMod} onClick={() => setOnlyRegisterMod(!onlyRegisterMod)} />} label="Module ou je suis incrit seulement" />
+                                        <FormControlLabel control={<Checkbox checked={onlyRegisterSes} onClick={() => { setOnlyRegisterMod(true); setOnlyRegisterSes(!onlyRegisterSes) } } />} label="Sessions ou je suis inscrit uniquement" />
                                     </FormGroup>
                                     <TextField
                                         variant="outlined"
                                         label="Recherche"
                                         placeholder="Code Module"
+                                        onChange={(e) => setSearch(e.target.value)}
                                     />
                                 </div>
                             </Grid>

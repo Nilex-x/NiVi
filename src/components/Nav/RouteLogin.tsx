@@ -1,7 +1,7 @@
 import { AppBar, Button, IconButton, Menu, MenuItem, Toolbar, Typography, CircularProgress } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { lazy, Suspense, useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 import { AccountCircle } from "@mui/icons-material";
 import RootStore from "../../store";
@@ -20,9 +20,13 @@ const NotFound = lazy(() => import('../BlockAccess/NotFound'));
 
 const HomeUI = lazy(() => import('../ui/HomeUi'));
 
-import PlanningUI from "../ui/PlanningUi"
+import PlanningUI from "../ui/PlanningUi";
 
 //const PlanningUI = lazy(() => import("../ui/PlanningUi"))
+
+//import ModuleDetailUI from "../ui/ModuleDetail";
+
+const ModuleDetailUI = lazy(() => import("../ui/ModuleDetail"))
 
 const RouteLogin = () => {
 
@@ -94,6 +98,7 @@ const RouteLogin = () => {
                         <Route exact path="/" component={HomeUI} />
                         <Route path="/user" component={ProfilUI} />
                         <Route path="/planning" component={PlanningUI} />
+                        <Route exact path="/module/:scolaryear/:codemodule/:codeinstance/:codeActi" component={ModuleDetailUI} />
                         <Route path="/*" component={NotFound} />
                     </Switch>
                 </div>

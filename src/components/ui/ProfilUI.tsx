@@ -25,7 +25,7 @@ const ProfilUI = () => {
     const { userLogin } = RootStore.getInstance()
     const queries = new Query()
     const [userInfo, setUserInfo] = useState<null | UserInfoType | any>(null)
-    const [isLoading, setLoading] = useState(false)
+    const [isLoading, setLoading] = useState<Boolean>(false)
 
     const getUserInfo = async () => {
         setLoading(true)

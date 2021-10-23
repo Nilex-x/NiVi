@@ -10,6 +10,7 @@ import { observer } from "mobx-react-lite";
 import RootStore from "../../store";
 import Query from "../../Graphql/Query";
 
+
 const Login = () => {
 
     const [userInput, setUserInput] = useState("")
@@ -23,8 +24,8 @@ const Login = () => {
         setLoading(true)
         try {
             const data = await queries.getUserInfo(userInput)
-            const UserInfo = data.data.GetUserInfo
-            if (UserInfo.login === "") {
+            const userInfo = data.data.GetUserInfo
+            if (userInfo.login === "") {
                 Swal.fire({
                     icon: "error",
                     title: "Votre clef autologin est inconnue",
@@ -32,7 +33,7 @@ const Login = () => {
                     footer: '<a href="https://intra.epitech.eu/admin/autolog" target="_blank">Cliquer ici pour trouver votre clef</a>'
                 })
             } else {
-                userLogin.login(userInput)
+                userLogin.login(userInput, userInfo.login, userLogin.firstName, userInfo.lastname, userInfo.semester)
             }
             setLoading(false)
         } catch (e) {
