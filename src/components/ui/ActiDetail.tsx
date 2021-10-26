@@ -62,7 +62,7 @@ const ActiDetailUI = () => {
         try {
             const response = await queries.getActiDetail(userLogin.authKey, scolaryear, codemodule, codeinstance, codeacti)
             const moduleDetail = response.data.GetActiDetail
-            //console.log("moduleDetail", moduleDetail)
+            console.log("moduleDetail", moduleDetail)
             setActiInfo(moduleDetail)
         } catch (err) {
             console.log("graphql error") //JSON.stringify(err, null, 2)
@@ -86,7 +86,37 @@ const ActiDetailUI = () => {
                     </div>
                     :
                     <div>
-                        {actiInfo?.title} - status: {actiInfo?.register ? "inscrit" : "pas inscrit"}
+                        <div className="box">
+                            <div>
+                                Nom du Module: {actiInfo?.module_title}
+                            </div>
+                            <div>
+                                Nom de l'activité: {actiInfo?.title}
+                            </div>
+                            <div>
+                                Status: {actiInfo?.register ? "inscrit" : "pas inscrit"}
+                            </div>
+                        </div>
+                        {actiInfo?.events.length > 0 &&
+                            <div className="box">
+                                <Typography variant="h4" align="center">Sessions:   </Typography>
+                                {actiInfo?.events.map((event: EventType, index) => (
+                                    <div className="box">
+                                        <div>
+                                            Session: {index} {event.title && `| ${event.title}`}
+                                        </div>
+                                        {event.description &&
+                                            <div>
+                                                {event.description}
+                                            </div>
+                                        }
+                                        <div>
+                                            Status: {event.user_status ? "inscrit" : "pas inscrit"}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        }
                     </div>
                 }
             </div>

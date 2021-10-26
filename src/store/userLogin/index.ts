@@ -9,12 +9,15 @@ export default class userLogin {
     firstName: string = "";
     lastName: string = "";
     currentSemestre: number = 0
+    graphqlStatus: boolean = true
     rootStore: RootStore;
 
     constructor(rootStore: RootStore) {
         makeObservable(this, {
             isLoggedIn: observable,
             authKey: observable,
+            graphqlStatus: observable,
+            currentSemestre: observable,
 
             login: action,
             logout: action
@@ -30,6 +33,10 @@ export default class userLogin {
         this.firstName = firstName;
         this.lastName = lastName;
         this.currentSemestre = currentSemestre;
+    }
+
+    setStatusGraphql = (status: boolean) => {
+        this.graphqlStatus = status
     }
 
     logout = () => {

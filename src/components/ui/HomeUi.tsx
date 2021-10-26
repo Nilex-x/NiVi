@@ -55,7 +55,7 @@ interface History {
     date: String
 }
 
-interface Board {
+interface BoardType {
     projets: Array<Projects>
     notes: Array<Notes>
     activites: Array<ActivitesBoard>
@@ -64,7 +64,7 @@ interface Board {
 
 const homeUI = () => {
 
-    const [boardInfo, setBoardInfo] = useState<null | Board | any>(null)
+    const [boardInfo, setBoardInfo] = useState<null | BoardType | any>(null)
     const [isLoading, setLoading] = useState<Boolean>(false)
 
     const queries = new Query()
@@ -106,7 +106,7 @@ const homeUI = () => {
                                 <div className="box">
                                     <Typography variant="h5" align="center">Projects</Typography>
                                     <div className="box-scrool-280">
-                                        {boardInfo && boardInfo?.projets.map((projet, index) => (
+                                        {boardInfo?.projets.length > 0 ? boardInfo?.projets.map((projet, index) => (
                                             <div className="box-info" key={index}>
                                                 <div className="marginbot-5">
                                                     {projet.title}
@@ -127,7 +127,12 @@ const homeUI = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))}
+                                        ))
+                                            :
+                                            <div>
+                                                Aucun projet
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </Grid>
@@ -135,7 +140,7 @@ const homeUI = () => {
                                 <div className="box">
                                     <Typography variant="h5" align="center">Notes</Typography>
                                     <div className="box-scrool-280">
-                                        {boardInfo && boardInfo?.notes.map((note, index) => (
+                                        {boardInfo?.notes.length > 0 ? boardInfo?.notes.map((note, index) => (
                                             <div className="box-info" key={index}>
                                                 <div className="space-between">
                                                     <div>
@@ -149,7 +154,12 @@ const homeUI = () => {
                                                     noteur: {note.noteur}
                                                 </div>
                                             </div>
-                                        ))}
+                                        ))
+                                            :
+                                            <div>
+                                                Aucune notes
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </Grid>
@@ -159,7 +169,7 @@ const homeUI = () => {
                                 <div className="box">
                                     <Typography variant="h5" align="center">Activités</Typography>
                                     <div className="box-scrool-280">
-                                        {boardInfo && boardInfo?.activites.map((activite, index) => (
+                                        {boardInfo?.activites.length > 0 ? boardInfo?.activites.map((activite, index) => (
                                             <div className="box-info" key={index}>
                                                 <div className="space-between marginbot-5">
                                                     <div>
@@ -185,7 +195,12 @@ const homeUI = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        ))}
+                                        ))
+                                            :
+                                            <div>
+                                                Aucune activités
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </Grid>
