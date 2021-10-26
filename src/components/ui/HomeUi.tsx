@@ -210,7 +210,7 @@ const homeUI = () => {
                         <Typography variant="h4" align="center">Historique</Typography>
                         <div className="box">
                             <div className="box-scroll-500">
-                                {boardInfo && boardInfo?.historys.map((history, index) => (
+                                {boardInfo.historys.length > 0 && boardInfo?.historys.map((history, index) => (
                                     <div key={index} className="marginbot-10" >
                                         <div dangerouslySetInnerHTML={{ __html: history.title }} />
                                     </div>
