@@ -9,7 +9,7 @@ export default class userLogin {
     firstName: string = "";
     lastName: string = "";
     currentSemestre: number = 0
-    graphqlStatus: boolean = true
+    graphqlStatus: boolean = true;
     rootStore: RootStore;
 
     constructor(rootStore: RootStore) {

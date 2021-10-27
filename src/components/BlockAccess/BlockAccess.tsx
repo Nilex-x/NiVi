@@ -1,26 +1,30 @@
-import { useQuery } from "@apollo/client";
-import { LoadingButton } from "@mui/lab";
-import { TextField, Grid, Button } from "@mui/material";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { GET_USER_INFO } from "../../Graphql/schema";
-import '../../Style/Login.css'
-import Logo from "../../assets/NIVILogo.png"
 
-const BlockAccess = ({ setStatus }) => {
+import { LoadingButton } from "@mui/lab";
+import { Grid } from "@mui/material";
+import { useState } from "react";
+import "../../Style/app.css";
+import Query from "../../Graphql/Query";
+import Logo from "../../assets/NIVILogo.png";
+import { observer } from "mobx-react-lite";
+import RootStore from "../../store";
+
+const BlockAccess = () => {
 
     const [isLoading, setLoading] = useState(false)
     const [nbRetry, setNbRetry] = useState(0)
-    const { refetch } = useQuery(GET_USER_INFO)
+    const queries = new Query()
+    const { userLogin } = RootStore.getInstance()
 
     const getGraphqlStatus = async () => {
         setNbRetry(nbRetry + 1)
-        setLoading(true)
+        const authKey = localStorage.getItem("KeyAuth")
         try {
-            const data = await refetch({ KeyAuth: "" })
-            setStatus(true)
-        } catch (e) {
-            setStatus(false)
+            const data = await queries.Login(authKey)
+            userLogin.setStatusGraphql(true)
+        } catch (err) {
+            console.log("graphql error") //JSON.stringify(err, null, 2)
+        } finally {
+            setLoading(false)
         }
         setLoading(false)
     }
@@ -52,4 +56,4 @@ const BlockAccess = ({ setStatus }) => {
     )
 }
 
-export default BlockAccess;
+export default observer(BlockAccess);

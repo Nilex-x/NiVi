@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Drawer, Hidden } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import RootStore from "../../store";
@@ -25,6 +25,7 @@ const Navigation = () => {
                 userLogin.login(authKey, login, firstname, lastname, semester)
             } catch (err) {
                 console.log("graphql error") //JSON.stringify(err, null, 2)
+                userLogin.setStatusGraphql(false)
             } finally {
                 setLoading(false)
             }
@@ -38,6 +39,7 @@ const Navigation = () => {
         getInfo()
     }, [])
 
+    if (!userLogin.graphqlStatus) return (<BlockAccess />)
     if (isLoading) return (<CircularProgress />)
     else if (!userLogin.isLoggedIn) return (<Login />)
 

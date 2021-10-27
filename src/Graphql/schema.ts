@@ -196,3 +196,12 @@ export const GET_ACTI_DETAIL = gql`
     }
   }
 `
+
+export const LOGIN_USER = gql`
+query LoginUser($KeyAuth: String!) {
+  Login(KeyAuth: $KeyAuth) {
+    login
+    lastname
+    firstname
+  }
+}`

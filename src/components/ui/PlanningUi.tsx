@@ -1,12 +1,9 @@
-import { AppBar, Button, Checkbox, CircularProgress, FormControlLabel, FormGroup, Grid, IconButton, Menu, MenuItem, TextField, Toolbar, Typography } from "@mui/material";
+import { Checkbox, CircularProgress, FormControlLabel, FormGroup, Grid, IconButton, Menu, MenuItem, TextField, Toolbar, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import RootStore from "../../store";
 import { useEffect, useState } from "react";
 import Query from "../../Graphql/Query";
-import '../../Style/app.css'
-import endOfYear from "date-fns/endOfYear";
-import startOfWeek from 'date-fns/startOfWeek'
-require('react-big-calendar/lib/css/react-big-calendar.css');
+import '../../Style/app.css';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -111,6 +108,7 @@ const PlanningUI = () => {
             formatEvent(planning)
         } catch (err) {
             console.log("graphql error") //JSON.stringify(err, null, 2)
+            userLogin.setStatusGraphql(false)
         }
         setLoading(false)
     }
@@ -193,8 +191,8 @@ const PlanningUI = () => {
                                     <Typography variant="h6" align="center">Filtres</Typography>
                                     <FormGroup>
                                         <FormControlLabel control={<Checkbox defaultChecked onClick={(e) => removeCurrentModule(e)} />} label="Modules du semestre courant" />
-                                        <FormControlLabel control={<Checkbox  checked={onlyRegisterMod} onClick={() => setOnlyRegisterMod(!onlyRegisterMod)} />} label="Module ou je suis incrit seulement" />
-                                        <FormControlLabel control={<Checkbox checked={onlyRegisterSes} onClick={() => { setOnlyRegisterMod(true); setOnlyRegisterSes(!onlyRegisterSes) } } />} label="Sessions ou je suis inscrit uniquement" />
+                                        <FormControlLabel control={<Checkbox  checked={onlyRegisterMod} onClick={() => {  (onlyRegisterMod && onlyRegisterSes) && setOnlyRegisterSes(false); setOnlyRegisterMod(!onlyRegisterMod)  }} />} label="Module ou je suis incrit seulement" />
+                                        <FormControlLabel control={<Checkbox checked={onlyRegisterSes} onClick={() => { (!onlyRegisterMod && !onlyRegisterSes) && setOnlyRegisterMod(true); setOnlyRegisterSes(!onlyRegisterSes) } } />} label="Sessions ou je suis inscrit uniquement" />
                                     </FormGroup>
                                     <TextField
                                         variant="outlined"

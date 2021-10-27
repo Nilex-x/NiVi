@@ -24,6 +24,10 @@ import PlanningUI from "../ui/PlanningUi";
 
 //const PlanningUI = lazy(() => import("../ui/PlanningUi"))
 
+//import ModuleUI from "../ui/ModuleUI";
+
+const ModuleUI = lazy(() => import("../ui/ModuleUI"))
+
 //import ModuleDetailUI from "../ui/ModuleDetail";
 
 const ActiDetailUI = lazy(() => import("../ui/ActiDetail"))
@@ -98,6 +102,7 @@ const RouteLogin = () => {
                         <Route exact path="/" component={HomeUI} />
                         <Route path="/user" component={ProfilUI} />
                         <Route path="/planning" component={PlanningUI} />
+                        {/* <Route path="/modules" component={ModuleUI} /> */}
                         <Route exact path="/module/:scolaryear/:codemodule/:codeinstance/:codeacti" component={ActiDetailUI} />
                         <Route path="/*" component={NotFound} />
                     </Switch>

@@ -79,6 +79,7 @@ const homeUI = () => {
             setLoading(false)
         } catch (err) {
             console.log("graphql error") //JSON.stringify(err, null, 2)
+            userLogin.setStatusGraphql(false)
         }
     }
 
@@ -130,7 +131,7 @@ const homeUI = () => {
                                         ))
                                             :
                                             <div>
-                                                Aucun projet
+                                                <Typography variant="h6" align="center">Aucun projet</Typography>
                                             </div>
                                         }
                                     </div>
@@ -157,7 +158,7 @@ const homeUI = () => {
                                         ))
                                             :
                                             <div>
-                                                Aucune notes
+                                                <Typography variant="h6" align="center">Aucune notes</Typography>
                                             </div>
                                         }
                                     </div>
@@ -198,7 +199,7 @@ const homeUI = () => {
                                         ))
                                             :
                                             <div>
-                                                Aucune activités
+                                                <Typography variant="h6" align="center">Aucune activités</Typography>
                                             </div>
                                         }
                                     </div>

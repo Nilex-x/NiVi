@@ -23,8 +23,8 @@ const Login = () => {
     const GetInfo = async () => {
         setLoading(true)
         try {
-            const data = await queries.getUserInfo(userInput)
-            const userInfo = data.data.GetUserInfo
+            const data = await queries.Login(userInput)
+            const userInfo = data.data.Login
             if (userInfo.login === "") {
                 Swal.fire({
                     icon: "error",
@@ -36,7 +36,8 @@ const Login = () => {
                 userLogin.login(userInput, userInfo.login, userLogin.firstName, userInfo.lastname, userInfo.semester)
             }
             setLoading(false)
-        } catch (e) {
+        } catch (err) {
+            console.log("graphql error", JSON.stringify(err, null, 2))
             setLoading(false)
             return
         }

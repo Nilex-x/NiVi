@@ -36,6 +36,12 @@
     text-align: center;
 }
 
+.space-between-n-center {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
 .space-around-col {
     display: flex;
     flex-direction: column;
@@ -119,7 +125,7 @@
 }
 
 .box-scrool-280::-webkit-scrollbar-track {
-    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0);
 }
 
 .VolumeBar > * {
@@ -158,5 +164,5 @@
 }
 
 .box-scroll-500::-webkit-scrollbar-track {
-    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0);
 }

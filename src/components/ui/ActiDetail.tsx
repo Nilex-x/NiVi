@@ -2,9 +2,10 @@ import { observer } from "mobx-react-lite";
 import react, { useEffect, useState } from "react";
 import "../../Style/app.css";
 import { useParams } from "react-router-dom";
-import { Typography, CircularProgress } from "@mui/material";
+import { Typography, CircularProgress, Grid } from "@mui/material";
 import Query from "../../Graphql/Query";
 import RootStore from "../../store";
+import format from "date-fns/format";
 
 interface RespType {
     title: String
@@ -17,7 +18,7 @@ interface EventType {
     title: String
     description: String
     nb_inscrits: String
-    begin: String
+    begin: string
     end: String
     location: String
     user_status: String
@@ -62,10 +63,15 @@ const ActiDetailUI = () => {
         try {
             const response = await queries.getActiDetail(userLogin.authKey, scolaryear, codemodule, codeinstance, codeacti)
             const moduleDetail = response.data.GetActiDetail
-            console.log("moduleDetail", moduleDetail)
-            setActiInfo(moduleDetail)
+            //console.log("moduleDetail", moduleDetail)
+            const newArray = moduleDetail.nb_hours.split(':').filter((element, index) => index < 2)
+            const newHours = `${newArray[0]}h${newArray[1]}`
+            const events = [...moduleDetail.events]
+            const sortEvents = events.sort((a, b) => (new Date(a.begin).getTime() > new Date(b.begin).getTime()) ? 1 : -1)
+            setActiInfo({ ...moduleDetail, hours: newHours, events: sortEvents })
         } catch (err) {
             console.log("graphql error") //JSON.stringify(err, null, 2)
+            userLogin.setStatusGraphql(false)
         } finally {
             setLoading(false)
         }
@@ -86,35 +92,66 @@ const ActiDetailUI = () => {
                     </div>
                     :
                     <div>
-                        <div className="box">
-                            <div>
-                                Nom du Module: {actiInfo?.module_title}
-                            </div>
-                            <div>
-                                Nom de l'activité: {actiInfo?.title}
-                            </div>
-                            <div>
-                                Status: {actiInfo?.register ? "inscrit" : "pas inscrit"}
+                        <div className="box marginbot-10">
+                            <div className="space-between-n-center">
+                                <div >
+                                    <div>
+                                        <b>Durée: </b>{actiInfo?.hours /*format(new Date(), 'kk:mm')*/}
+                                    </div>
+                                    <div>
+                                        <b>Status: </b>{actiInfo?.register ? "inscrit" : "pas inscrit"}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <b>Nom du Module: </b>{actiInfo?.module_title}
+                                    </div>
+                                    <div>
+                                        <b>Nom de l'activité: </b>{actiInfo?.title}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         {actiInfo?.events.length > 0 &&
-                            <div className="box">
+                            <div>
                                 <Typography variant="h4" align="center">Sessions:   </Typography>
-                                {actiInfo?.events.map((event: EventType, index) => (
-                                    <div className="box">
-                                        <div>
-                                            Session: {index} {event.title && `| ${event.title}`}
+                                <div className="box-scroll-500">
+                                    {actiInfo?.events.map((event: EventType, index) => (
+                                        <div className="box" key={index}>
+                                            <Typography variant="h6" align="center">Session: {index} {event.title && `| ${event.title}`}</Typography>
+                                            <Grid container spacing={2} >
+                                                <Grid item>
+                                                    <div>
+                                                        <div>
+                                                            <b>Salle: </b>{event.location}
+                                                        </div>
+                                                        <div>
+                                                            <b>Nombres de place: </b>{event.seats}
+                                                        </div>
+                                                        <div>
+                                                            <b>commence le: </b>{format(new Date(event.begin), 'dd/MM-kk:mm')}
+                                                        </div>
+                                                    </div>
+                                                </Grid>
+                                                <Grid item xs={8}>
+                                                    {event.description &&
+                                                        <div>
+                                                            {event.description}
+                                                        </div>
+                                                    }
+                                                </Grid>
+                                                <Grid item>
+                                                    <div style={{ display: "inline" }}>
+                                                        <b>Status: </b>
+                                                        <div style={{ display: "inline", color: event.user_status ? "#03CE12" : "#CE0303" }}>
+                                                            {event.user_status ? "inscrit" : "pas inscrit"}
+                                                        </div>
+                                                    </div>
+                                                </Grid>
+                                            </Grid>
                                         </div>
-                                        {event.description &&
-                                            <div>
-                                                {event.description}
-                                            </div>
-                                        }
-                                        <div>
-                                            Status: {event.user_status ? "inscrit" : "pas inscrit"}
-                                        </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
                         }
                     </div>

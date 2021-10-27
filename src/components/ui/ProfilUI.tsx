@@ -35,6 +35,7 @@ const ProfilUI = () => {
             setUserInfo(response.data.GetUserInfo)
         } catch (err) {
             console.log("graphql error") //JSON.stringify(err, null, 2)
+            userLogin.setStatusGraphql(false)
         }
         setLoading(false)
     }

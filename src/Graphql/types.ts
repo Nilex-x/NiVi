@@ -219,16 +219,17 @@ export type ActiType = {
 
 export type Query = {
   __typename?: 'Query';
-  GetPlanning?: Maybe<Array<Maybe<Planning>>>;
+  Login: User;
   GetAllModule: Array<Maybe<Module>>;
   GetModuleDetail: ModuleDetail;
   GetActiDetail: ActiType;
   GetUserInfo: User;
   GetBoard: Board;
+  GetPlanning: Array<Maybe<Planning>>;
 };
 
 
-export type QueryGetPlanningArgs = {
+export type QueryLoginArgs = {
   KeyAuth: Scalars['String'];
 };
 
@@ -264,5 +265,10 @@ export type QueryGetUserInfoArgs = {
 
 
 export type QueryGetBoardArgs = {
+  KeyAuth: Scalars['String'];
+};
+
+
+export type QueryGetPlanningArgs = {
   KeyAuth: Scalars['String'];
 };
